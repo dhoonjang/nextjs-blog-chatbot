@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { FC } from 'react';
 import { AiOutlineSetting } from 'react-icons/ai';
 import { BsPencilSquare } from 'react-icons/bs';
+import IconButton from './IconButton';
 
 const Footer: FC = () => {
   return (
@@ -14,12 +15,18 @@ const Footer: FC = () => {
       </div>
       <div className="flex items-center gap-2 lg:gap-3">
         <div className="pr-1 text-sm lg:pr-2 lg:text-base">ADMIN</div>
-        <Link href="/admin">
-          <AiOutlineSetting className="h-5 w-5 text-gray-500 transition-all hover:text-gray-600 lg:h-6 lg:w-6" />
-        </Link>
-        <Link href="/write">
-          <BsPencilSquare className="h-5 w-5 text-gray-500 transition-all hover:text-gray-600 lg:h-6 lg:w-6" />
-        </Link>
+        <IconButton
+          icon={AiOutlineSetting}
+          href="/admin"
+          component={Link}
+          className="text-gray-500 hover:text-gray-600"
+        />
+        <IconButton
+          icon={BsPencilSquare}
+          href="/write"
+          component={Link}
+          className="text-gray-500 hover:text-gray-600"
+        />
       </div>
     </footer>
   );

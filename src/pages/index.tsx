@@ -1,7 +1,10 @@
+import { createClient } from '@/utils/supabase/client';
 import { Inter } from 'next/font/google';
 import Image from 'next/image';
 
 const inter = Inter({ subsets: ['latin'] });
+
+const supabase = createClient();
 
 export default function Home() {
   return (

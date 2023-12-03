@@ -18,7 +18,7 @@ const Sidebar: FC<SidebarProps> = ({ close, isOpen }) => {
       )}
     >
       <div className="flex justify-end lg:hidden">
-        <IconButton icon={AiOutlineClose} onAbort={close} />
+        <IconButton icon={AiOutlineClose} onClick={close} />
       </div>
       <Link href="/" className="w-48 font-medium text-gray-600 hover:underline">
         홈

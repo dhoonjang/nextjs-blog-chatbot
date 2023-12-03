@@ -1,4 +1,6 @@
 import { cn } from '@/utils/style';
+import { createClient } from '@/utils/supabase/client';
+import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
 import { FC } from 'react';
 import { AiFillGithub, AiFillInstagram, AiOutlineClose } from 'react-icons/ai';
@@ -9,7 +11,17 @@ type SidebarProps = {
   isOpen: boolean;
 };
 
+const supabase = createClient();
+
 const Sidebar: FC<SidebarProps> = ({ close, isOpen }) => {
+  const { data: existingCategories } = useQuery({
+    queryKey: ['categories'],
+    queryFn: async () => {
+      const { data } = await supabase.from('Post').select('category');
+      return Array.from(new Set(data?.map((d) => d.category)));
+    },
+  });
+
   return (
     <div
       className={cn(
@@ -24,17 +36,20 @@ const Sidebar: FC<SidebarProps> = ({ close, isOpen }) => {
         홈
       </Link>
       <Link
-        href="/tag"
+        href="/tags"
         className="w-48 font-medium text-gray-600 hover:underline"
       >
         태그
       </Link>
-      <Link
-        href="/category/Web-Development"
-        className="w-48 font-medium text-gray-600 hover:underline"
-      >
-        Web Development
-      </Link>
+      {existingCategories?.map((category) => (
+        <Link
+          href={`/category/${category}`}
+          className="w-48 font-medium text-gray-600 hover:underline"
+          key={category}
+        >
+          {category}
+        </Link>
+      ))}
       <div className="mt-10 flex items-center gap-4">
         <IconButton
           component={Link}
@@ -47,6 +62,11 @@ const Sidebar: FC<SidebarProps> = ({ close, isOpen }) => {
           icon={AiFillGithub}
           href="https://www.github.com/dhoonjang"
           target="_blank"
+        />
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fnextjs-blog-chatbot.vercel.app&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=%EB%B0%A9%EB%AC%B8%EC%9E%90&edge_flat=false"
+          alt="방문자 뱃지"
         />
       </div>
     </div>

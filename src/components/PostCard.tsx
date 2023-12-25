@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { FC } from 'react';
 
-type PostCardProps = Omit<Post, 'tags'> & {
+export type PostCardProps = Omit<Post, 'tags'> & {
   className?: string;
 };
 
@@ -15,6 +15,7 @@ const PostCard: FC<PostCardProps> = ({
   preview_image_url,
   className,
 }) => {
+  console.log(id, title, content, preview_image_url, className);
   return (
     <Link href={`/posts/${id}`} className={cn('bg-white', className)}>
       <div className="relative aspect-[1.8/1] w-full">

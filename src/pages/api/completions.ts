@@ -1,35 +1,33 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import OpenAI from 'openai';
-import type { ChatCompletionMessage } from 'openai/resources/index.mjs';
+import type { ChatCompletionMessageParam } from 'openai/resources/index.mjs';
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
 type CompletionsResponse = {
-  messages: ChatCompletionMessage[];
+  messages: ChatCompletionMessageParam[];
 };
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<CompletionsResponse>,
 ) {
-  if (req.method !== 'GET') return res.status(405).end();
+  if (req.method !== 'POST') return res.status(405).end();
 
-  const messages: ChatCompletionMessage[] = [];
+  const messages = req.body.messages as ChatCompletionMessageParam[];
 
   const response = await openai.chat.completions.create({
     messages: [
       {
         role: 'system',
-        content: '너는 내가 만든 챗봇이야.',
+        content:
+          '너는 장동훈만을 위한 챗봇이야. 내가 물어보는 개발 질문에 성실하게 답변해줘',
       },
-      {
-        role: 'user',
-        content: '너는 누구니?',
-      },
+      ...messages,
     ],
-    model: 'gpt-4-0613',
+    model: 'gpt-4-1106-preview',
   });
 
   messages.push(response.choices[0].message);

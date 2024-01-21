@@ -37,7 +37,7 @@ const Sidebar: FC<SidebarProps> = ({ close, isOpen }) => {
       </Link>
       {existingCategories?.map((category) => (
         <Link
-          href={`/category/${category}`}
+          href={`/categories/${category}`}
           className="w-48 font-medium text-gray-600 hover:underline"
           key={category}
         >

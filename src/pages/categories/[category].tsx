@@ -1,20 +1,27 @@
 import PostList from '@/components/PostList';
-import { GetServerSideProps } from 'next';
+import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next';
 
 type CategoryPostsProps = {
   category: string;
 };
 
-export default function CategoryPosts({ category }: CategoryPostsProps) {
-  return <PostList category={category} />;
-}
+export const getStaticPaths = (async () => {
+  return {
+    paths: [],
+    fallback: 'blocking',
+  };
+}) satisfies GetStaticPaths;
 
-export const getServerSideProps: GetServerSideProps<
-  CategoryPostsProps
-> = async ({ query }) => {
+export const getStaticProps = (async (context) => {
   return {
     props: {
-      category: query.category as string,
+      category: context.params?.category as string,
     },
   };
-};
+}) satisfies GetStaticProps<CategoryPostsProps>;
+
+export default function CategoryPosts({
+  category,
+}: InferGetStaticPropsType<typeof getStaticProps>) {
+  return <PostList category={category} />;
+}

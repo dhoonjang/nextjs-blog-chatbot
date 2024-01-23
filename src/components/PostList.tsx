@@ -1,3 +1,4 @@
+import { Post } from '@/types';
 import { cn } from '@/utils/style';
 import { createClient } from '@/utils/supabase/client';
 import { useInfiniteQuery } from '@tanstack/react-query';
@@ -11,9 +12,15 @@ type PostListProps = {
   category?: string;
   tag?: string;
   className?: string;
+  initalPosts?: Post[];
 };
 
-const PostList: FC<PostListProps> = ({ category, tag, className }) => {
+const PostList: FC<PostListProps> = ({
+  category,
+  tag,
+  className,
+  initalPosts,
+}) => {
   const { ref, inView } = useInView();
 
   const {
@@ -38,10 +45,24 @@ const PostList: FC<PostListProps> = ({ category, tag, className }) => {
           nextPage: null,
         };
       return {
-        posts: data,
+        posts: data.map((post) => ({
+          ...post,
+          tags: JSON.parse(post.tags) as string[],
+        })),
         nextPage: data.length === 5 ? pageParam + 5 : null,
       };
     },
+    initialData: !!initalPosts
+      ? {
+          pages: [
+            {
+              posts: initalPosts,
+              nextPage: initalPosts.length === 5 ? 5 : null,
+            },
+          ],
+          pageParams: [0],
+        }
+      : undefined,
     initialPageParam: 0,
     getNextPageParam: (lastPage) => lastPage.nextPage,
   });

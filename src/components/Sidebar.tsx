@@ -1,6 +1,5 @@
 import { useCategories } from '@/utils/hooks';
 import { cn } from '@/utils/style';
-import { createClient } from '@/utils/supabase/client';
 import Link from 'next/link';
 import { FC } from 'react';
 import { AiFillGithub, AiFillInstagram, AiOutlineClose } from 'react-icons/ai';
@@ -10,8 +9,6 @@ type SidebarProps = {
   close: () => void;
   isOpen: boolean;
 };
-
-const supabase = createClient();
 
 const Sidebar: FC<SidebarProps> = ({ close, isOpen }) => {
   const { data: existingCategories } = useCategories();
@@ -24,7 +21,11 @@ const Sidebar: FC<SidebarProps> = ({ close, isOpen }) => {
       )}
     >
       <div className="flex justify-end lg:hidden">
-        <IconButton Icon={AiOutlineClose} onClick={close} />
+        <IconButton
+          Icon={AiOutlineClose}
+          onClick={close}
+          label="sidebarClose"
+        />
       </div>
       <Link href="/" className="w-48 font-medium text-gray-600 hover:underline">
         홈
@@ -48,12 +49,14 @@ const Sidebar: FC<SidebarProps> = ({ close, isOpen }) => {
         <IconButton
           Icon={AiFillInstagram}
           component={Link}
+          label="instagramLink"
           href="https://www.instagram.com/dhoonjang"
           target="_blank"
         />
         <IconButton
           Icon={AiFillGithub}
           component={Link}
+          label="githubLink"
           href="https://www.github.com/dhoonjang"
           target="_blank"
         />

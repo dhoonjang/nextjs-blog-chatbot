@@ -13,6 +13,7 @@ const Message: FC<MessageProps> = ({ content, role, posts }) => {
   return (
     <div
       className={cn('p-4 lg:p-6', role === 'user' ? 'bg-white' : 'bg-gray-100')}
+      data-cy={`message-${role}`}
     >
       <div className="container mx-auto flex items-start gap-3 lg:gap-4">
         {role === 'user' ? (

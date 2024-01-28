@@ -115,7 +115,11 @@ const SearchPage = () => {
             className="flex-1 rounded-md p-2 pl-3"
             placeholder="NextJS가 뭐야?"
           />
-          <IconButton Icon={AiOutlineSearch} type="submit" />
+          <IconButton
+            Icon={AiOutlineSearch}
+            label="submitMessage"
+            type="submit"
+          />
         </form>
         <Button
           className="ml-auto mt-2 block w-[100px]"

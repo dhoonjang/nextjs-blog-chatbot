@@ -18,12 +18,14 @@ const Footer: FC = () => {
         <IconButton
           Icon={AiOutlineSetting}
           component={Link}
+          label="adminLink"
           href="/admin"
           className="text-gray-500 hover:text-gray-600"
         />
         <IconButton
           Icon={BsPencilSquare}
           component={Link}
+          label="writeLink"
           href="/write"
           className="text-gray-500 hover:text-gray-600"
         />

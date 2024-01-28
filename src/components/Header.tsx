@@ -15,13 +15,19 @@ const Header: FC<HeaderProps> = ({ isSidebarOpen, setIsSidebarOpen }) => {
       <IconButton
         onClick={() => setIsSidebarOpen((t) => !t)}
         Icon={isSidebarOpen ? AiOutlineClose : AiOutlineMenu}
+        label="sidebarToggle"
       />
       <Link href="/">
         <h1 className="text-3xl font-medium text-slate-600 lg:text-4xl">
           BLOG
         </h1>
       </Link>
-      <IconButton Icon={BsRobot} component={Link} href="/search" />
+      <IconButton
+        Icon={BsRobot}
+        component={Link}
+        label="chatbotLink"
+        href="/search"
+      />
     </header>
   );
 };

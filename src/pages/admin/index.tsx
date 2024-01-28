@@ -47,6 +47,16 @@ export default function Admin() {
           <Button
             type="button"
             onClick={() => {
+              fetch('/api/posts', {
+                method: 'DELETE',
+              });
+            }}
+          >
+            테스트 글 삭제
+          </Button>
+          <Button
+            type="button"
+            onClick={() => {
               supabase.auth.signOut();
               router.push('/');
             }}

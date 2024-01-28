@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "genTypes": "supabase gen types typescript --project-id msprpjkbkbwcrvnwiany > src/types/supabase.ts"
+    "genTypes": "supabase gen types typescript --project-id msprpjkbkbwcrvnwiany > src/types/supabase.ts",
+    "cypress:open": "cypress open"
   },
   "dependencies": {
     "@supabase/ssr": "^0.0.10",
@@ -35,9 +36,11 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "autoprefixer": "^10.0.1",
+    "cypress": "^13.6.3",
     "eslint": "^8",
     "eslint-config-next": "14.0.3",
     "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-cypress": "^2.15.1",
     "eslint-plugin-tailwindcss": "^3.13.0",
     "postcss": "^8",
     "prettier": "^3.1.0",

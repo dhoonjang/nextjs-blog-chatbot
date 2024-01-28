@@ -15,7 +15,6 @@ const PostCard: FC<PostCardProps> = ({
   preview_image_url,
   className,
 }) => {
-  console.log(id, title, content, preview_image_url, className);
   return (
     <Link href={`/posts/${id}`} className={cn('bg-white', className)}>
       <div className="relative aspect-[1.8/1] w-full">

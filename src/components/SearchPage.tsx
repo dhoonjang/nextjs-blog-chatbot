@@ -1,3 +1,5 @@
+'use client';
+
 import IconButton from '@/components/IconButton';
 import Message, { MessageProps } from '@/components/Message';
 import { useMutation } from '@tanstack/react-query';

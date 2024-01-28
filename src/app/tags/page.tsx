@@ -1,8 +1,14 @@
-import { useTags } from '@/utils/hooks';
+import { createClient } from '@/utils/supabase/server';
+import { cookies } from 'next/headers';
 import Link from 'next/link';
 
-export default function Tag() {
-  const { data: existingTags } = useTags();
+export default async function Tag() {
+  const supabase = createClient(cookies());
+
+  const { data } = await supabase.from('Post').select('tags');
+  const existingTags = Array.from(
+    new Set(data?.flatMap((d) => JSON.parse(d.tags))),
+  );
 
   return (
     <div className="flex flex-col items-center gap-2 px-4 pb-24 pt-20">

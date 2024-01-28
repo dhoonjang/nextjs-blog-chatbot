@@ -1,16 +1,15 @@
+'use client';
+
 import { useCategories } from '@/utils/hooks';
 import { cn } from '@/utils/style';
 import Link from 'next/link';
 import { FC } from 'react';
 import { AiFillGithub, AiFillInstagram, AiOutlineClose } from 'react-icons/ai';
 import IconButton from './IconButton';
+import { useSidebar } from './Providers';
 
-type SidebarProps = {
-  close: () => void;
-  isOpen: boolean;
-};
-
-const Sidebar: FC<SidebarProps> = ({ close, isOpen }) => {
+const Sidebar: FC = () => {
+  const { isOpen, setIsOpen } = useSidebar();
   const { data: existingCategories } = useCategories();
 
   return (
@@ -23,7 +22,7 @@ const Sidebar: FC<SidebarProps> = ({ close, isOpen }) => {
       <div className="flex justify-end lg:hidden">
         <IconButton
           Icon={AiOutlineClose}
-          onClick={close}
+          onClick={() => setIsOpen(false)}
           label="sidebarClose"
         />
       </div>

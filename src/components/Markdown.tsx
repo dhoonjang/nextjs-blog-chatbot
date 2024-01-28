@@ -1,3 +1,5 @@
+'use client';
+
 import type { MarkdownPreviewProps } from '@uiw/react-markdown-preview';
 import type { MDEditorProps } from '@uiw/react-md-editor';
 import dynamic from 'next/dynamic';

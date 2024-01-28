@@ -1,3 +1,5 @@
+'use client';
+
 import { Post } from '@/types';
 import { cn } from '@/utils/style';
 import { createClient } from '@/utils/supabase/client';
@@ -28,7 +30,7 @@ const PostList: FC<PostListProps> = ({
     fetchNextPage,
     hasNextPage,
   } = useInfiniteQuery({
-    queryKey: ['posts'],
+    queryKey: ['posts', category, tag],
     queryFn: async ({ pageParam }) => {
       let request = supabase.from('Post').select('*');
 

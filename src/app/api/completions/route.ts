@@ -1,5 +1,6 @@
 import { createClient } from '@/utils/supabase/server';
-import { NextApiRequest, NextApiResponse } from 'next';
+import { cookies } from 'next/headers';
+import { NextRequest } from 'next/server';
 import OpenAI from 'openai';
 import type {
   ChatCompletionMessageParam,
@@ -39,19 +40,12 @@ const getBlogContent = async (
   return data[0];
 };
 
-type CompletionsResponse = {
-  messages: ChatCompletionMessageParam[];
-};
+export async function POST(request: NextRequest) {
+  const { messages } = (await request.json()) as {
+    messages: ChatCompletionMessageParam[];
+  };
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse<CompletionsResponse>,
-) {
-  if (req.method !== 'POST') return res.status(405).end();
-
-  const messages = req.body.messages as ChatCompletionMessageParam[];
-
-  const supabase = await createClient(undefined, req.cookies);
+  const supabase = await createClient(cookies());
 
   if (messages.length === 1) {
     messages.unshift(await getFirstMessage(supabase));
@@ -96,5 +90,5 @@ export default async function handler(
     }
   }
 
-  res.status(200).json({ messages });
+  return Response.json({ messages });
 }

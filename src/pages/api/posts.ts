@@ -11,7 +11,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Post | StorageError | PostgrestError>,
 ) {
-  const supabase = await createClient(req.cookies);
+  const supabase = await createClient(undefined, req.cookies);
 
   if (req.method === 'DELETE') {
     const { error } = await supabase

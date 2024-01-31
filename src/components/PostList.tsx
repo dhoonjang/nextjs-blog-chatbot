@@ -1,6 +1,7 @@
 'use client';
 
 import { Post } from '@/types';
+import { getPosts } from '@/utils/fetch';
 import { cn } from '@/utils/style';
 import { createClient } from '@/utils/supabase/client';
 import { useInfiniteQuery } from '@tanstack/react-query';
@@ -32,26 +33,15 @@ const PostList: FC<PostListProps> = ({
   } = useInfiniteQuery({
     queryKey: ['posts', category, tag],
     queryFn: async ({ pageParam }) => {
-      let request = supabase.from('Post').select('*');
-
-      if (category) request = request.eq('category', category);
-      if (tag) request = request.like('tags', `%${tag}%`);
-
-      const { data } = await request
-        .order('created_at', { ascending: false })
-        .range(pageParam, pageParam + 4);
-
-      if (!data)
+      const posts = await getPosts({ category, tag, page: pageParam });
+      if (!posts)
         return {
           posts: [],
           nextPage: null,
         };
       return {
-        posts: data.map((post) => ({
-          ...post,
-          tags: JSON.parse(post.tags) as string[],
-        })),
-        nextPage: data.length === 5 ? pageParam + 5 : null,
+        posts,
+        nextPage: posts.length === 5 ? pageParam + 5 : null,
       };
     },
     initialData: !!initalPosts

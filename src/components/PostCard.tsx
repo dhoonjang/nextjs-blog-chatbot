@@ -24,6 +24,7 @@ const PostCard: FC<PostCardProps> = ({
           sizes="360px"
           alt={title}
           className="object-cover"
+          priority
         />
       </div>
       <div className="p-2">
